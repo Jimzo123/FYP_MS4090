@@ -34,7 +34,7 @@ p_list = c(1, 2, 4, 6, 12, 26, 52, 365)
 # General UI --------------------------------------------------------------
 ui <- dashboardPage(
     dashboardHeader(title = "Actuarial Tasks in R"),
-    
+
     dashboardSidebar(
         
         sidebarMenu(
@@ -42,11 +42,10 @@ ui <- dashboardPage(
             menuItem("SORP Calculator", tabName = "sorp"),
             menuItem("Drawdown Simulator", tabName = "drawdown"),
             # menuItem("SORP & Drawdown", tabName = "sorp_x_drawdown"),
-            #menuItem("SORP & Drawdown", tabName = "sorp_bh"),
-            #menuItem("Risk Profiler", tabName = "riskprofiler")
+            menuItem("SORP & Drawdown", tabName = "sorp_bh")
         )
     ),
-    
+
     dashboardBody(
         useShinyjs(),
         fluidRow(
@@ -55,8 +54,7 @@ ui <- dashboardPage(
                 tabItem(tabName = 'sorp', source("source_scripts/sorp_ui.R", local = TRUE)[1]),
                 tabItem(tabName = 'drawdown', source("source_scripts/drawdown_ui.R", local = TRUE)[1]),
                 # tabItem(tabName = 'sorp_x_drawdown', source("source_scripts/sorp_x_drawdown_ui.R", local = TRUE)[1]),
-                #tabItem(tabName = 'sorp_bh', source("source_scripts/sorp_bh_ui.R", local = TRUE)[1]),
-                #tabItem(tabName = 'riskprofiler', source("source_scripts/risk_profiler_ui.R", local = TRUE)[1])
+                tabItem(tabName = 'sorp_bh', source("source_scripts/sorp_bh_ui.R", local = TRUE)[1])
             )
         )
     )
@@ -69,8 +67,7 @@ server <- function(input, output, session) {
     source("source_scripts/sorp_server.R", local = TRUE)[1]
     source("source_scripts/drawdown_server.R", local = TRUE)[1]
     # source("source_scripts/sorp_x_drawdown_server.R", local = TRUE)[1]
-    #source("source_scripts/sorp_bh_server.R", local = TRUE)[1]
-    #source("source_scripts/risk_profiler_server.R", local = TRUE)[1]
+    source("source_scripts/sorp_bh_server.R", local = TRUE)[1]
 }
 
 # Run the application 
