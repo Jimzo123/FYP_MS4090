@@ -15,8 +15,8 @@ list(
       }
     }
     
-    ILT15_female_reduced <- probs2lifetable(probs=qx_female,radix=100000,"qx",name="ILT15_female_reduced")
-    return(ILT15_female_reduced)
+  ILT15_female_reduced <- probs2lifetable(probs=qx_female,radix=100000,"qx",name="ILT15_female_reduced")
+  return(ILT15_female_reduced)
   },
   
   SORP <- function(age_1, age_2, relationship, sal, fundvalue, PreK, PostK, emp_contri, empr_contri, salEsc, iPost, annEsc, guaranteed, equity, fixed, cash, investCharge, equity_p = 4.5, fixed_p = 1, cash_p = 0){

@@ -5,7 +5,11 @@ library(shinyWidgets)
 library(DT)
 library(tidyverse)
 library(readxl)
-
+library(readr)
+library(ggthemes)
+library(gganimate)
+library(hrbrthemes)
+library(plotly)
 library(lifecontingencies)
 options(scipen=999)
 
@@ -30,19 +34,31 @@ listOfTables <- list(ILT15_female_reduced, ILT15_male_reduced)
 freq_list = c("Annually", "Semi-Annually", "Quarterly", "Bi-Monthly", "Monthly", "Fortnightly", "Weekly", "Daily")
 p_list = c(1, 2, 4, 6, 12, 26, 52, 365)
 
+# Risk Profiler Questions -------------------------------------------------------------
+Qlist <- read.csv("data/Qlist.csv")
+num.quest = nrow(Qlist)
+myLists = vector("list", nrow(Qlist))
+for(i in(1:nrow(Qlist))){
+    myListX = list()
+    for(j in (1:(ncol(Qlist)-2))){
+        myListX[Qlist[i,j+2]] = ncol(Qlist) - 1 - j
+    }
+    myLists[[i]] = myListX
+    #Encoding(names(myLists[[i]])) = "UTF-8"
+}
 
 # General UI --------------------------------------------------------------
 ui <- dashboardPage(
     dashboardHeader(title = "Actuarial Tasks in R"),
 
     dashboardSidebar(
-        
         sidebarMenu(
             menuItem("Loan Calculator", tabName = "loan_calc"),
             menuItem("SORP Calculator", tabName = "sorp"),
-            menuItem("Drawdown Simulator", tabName = "drawdown"),
+            #menuItem("Drawdown Simulator", tabName = "drawdown"),
             # menuItem("SORP & Drawdown", tabName = "sorp_x_drawdown"),
-            menuItem("SORP & Drawdown", tabName = "sorp_bh")
+            menuItem("SORP & Drawdown", tabName = "sorp_bh"),
+            menuItem("Risk Profiler", tabName = "risk_profiler")
         )
     ),
 
@@ -52,9 +68,10 @@ ui <- dashboardPage(
             tabItems(
                 tabItem(tabName = 'loan_calc', source("source_scripts/loan_calc_ui.R", local = TRUE)[1]),
                 tabItem(tabName = 'sorp', source("source_scripts/sorp_ui.R", local = TRUE)[1]),
-                tabItem(tabName = 'drawdown', source("source_scripts/drawdown_ui.R", local = TRUE)[1]),
+                # tabItem(tabName = 'drawdown', source("source_scripts/drawdown_ui.R", local = TRUE)[1]),
                 # tabItem(tabName = 'sorp_x_drawdown', source("source_scripts/sorp_x_drawdown_ui.R", local = TRUE)[1]),
-                tabItem(tabName = 'sorp_bh', source("source_scripts/sorp_bh_ui.R", local = TRUE)[1])
+                tabItem(tabName = 'sorp_bh', source("source_scripts/sorp_bh_ui.R", local = TRUE)[1]),
+                tabItem(tabName = 'risk_profiler', source("source_scripts/risk_profiler_ui.R", local = TRUE)[1])
             )
         )
     )
@@ -65,9 +82,10 @@ server <- function(input, output, session) {
     source("source_scripts/functions.R", local = TRUE)[1]
     source("source_scripts/loan_calc_server.R", local = TRUE)[1]
     source("source_scripts/sorp_server.R", local = TRUE)[1]
-    source("source_scripts/drawdown_server.R", local = TRUE)[1]
+    #source("source_scripts/drawdown_server.R", local = TRUE)[1]
     # source("source_scripts/sorp_x_drawdown_server.R", local = TRUE)[1]
     source("source_scripts/sorp_bh_server.R", local = TRUE)[1]
+    source("source_scripts/risk_profiler_server.R", local = TRUE)[1]
 }
 
 # Run the application 
