@@ -76,15 +76,15 @@ list(
   }),
   
   dynamicUi <- reactive({
-    results <<- rep("", nrow(Qlist))
-    names(results)  <<- Qlist[,2]
     # Initially it shows a welcome message.
-    if (input$Submit %% (num.quest+2) ==0)
+    if (input$Submit %% (num.quest+2) == 0)
+    {results <<- rep("", nrow(Qlist))
+    names(results)  <<- Qlist[,2]
     return(
       list(
         h5("Click next to begin survey")
       )
-    )
+    )}
     
     if (input$Submit %% (num.quest+2) >0 & input$Submit %% (num.quest+2) <= num.quest){
       return(
@@ -136,20 +136,18 @@ list(
   }),
   
   
-  portfolioA = function(){
-    updateNumericInput(session,"annual_mean_return", value = 3)
-    updateNumericInput(session,"annual_ret_std_dev", value = 1)
+  portfolioA <- function(){
+    updateNumericInputIcon(session,"annual_mean_return", value = 3)
+    updateNumericInputIcon(session,"annual_ret_std_dev", value = 1)
   },
   
-  portfolioB = function(){
-    updateNumericInput(session,"annual_mean_return", value = 5)
-    updateNumericInput(session,"annual_ret_std_dev", value = 7)
+  portfolioB <- function(){
+    updateNumericInputIcon(session,"annual_mean_return", value = 5)
+    updateNumericInputIcon(session,"annual_ret_std_dev", value = 7)
   },
   
-  portfolioC = function(){
-    updateNumericInput(session,"annual_mean_return", value = 7)
-    updateNumericInput(session,"annual_ret_std_dev", value = 15)
+  portfolioC <- function(){
+    updateNumericInputIcon(session,"annual_mean_return", value = 7)
+    updateNumericInputIcon(session,"annual_ret_std_dev", value = 15)
   }
-  
-  
 )
